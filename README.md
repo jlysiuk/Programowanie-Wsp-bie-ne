@@ -1,8 +1,6 @@
 # Programowanie-Wspobiezne
 Zadania rozwiązywane na potrzeby przedmiotu "Programowanie Współbieżne"
 
-# Concurrent programming
-
 ## Working Group
 
 | Name Surname (initials) | GUID                                     |
