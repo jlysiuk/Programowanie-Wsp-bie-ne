@@ -5,7 +5,7 @@
         private int _xDirection;                                        //Kierunek, w ktorym porusza sie kula w osi x (wartosc pomiedzy -1 a 1)
         private int _yDirection;                                        //Kierunek, w ktorym porusza sie kula w osi y (wartosc pomiedzy -1 a 1)
 
-        public Ball (int x, int y, int xDirection, int yDirection) {    //Konsturktor parametrowy, tworzy kule w podanym miejsu poruszajaca sie w podanym kierunku
+        public Ball (int x, int y, int xDirection, int yDirection) {    //Konstruktor parametrowy, tworzy kule w podanym miejsu poruszajaca sie w podanym kierunku
             _x = x;
             _y = y;
             _xDirection = xDirection;
