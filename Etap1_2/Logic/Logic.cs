@@ -29,13 +29,15 @@ namespace Logic {
             Random randomizer = new Random(Guid.NewGuid().GetHashCode());
             int _x = randomizer.Next(Surface.LEFT_CORNER_X + 100, Surface.LEFT_CORNER_X + Surface.WIDTH - 100);
             int _y = randomizer.Next(Surface.LEFT_CORNER_Y + 100, Surface.LEFT_CORNER_Y + Surface.HEIGHT - 100);
-            int _xDirection = randomizer.Next(-1, 2);
-            int _yDirection = randomizer.Next(-1, 2);
+            int _xDirection = randomizer.Next(-5, 6);
+            int _yDirection = randomizer.Next(-5, 6);
             while (_xDirection == 0 && _yDirection == 0) {
-                _xDirection = randomizer.Next(-1, 2);
-                _yDirection = randomizer.Next(-1, 2);
+                _xDirection = randomizer.Next(-5, 6);
+                _yDirection = randomizer.Next(-5, 6);
             }
-            return new Ball(_x, _y, _xDirection, _yDirection);
+            int _mass = randomizer.Next(1, 6);
+            int _radius = (1 / _mass) * 10;
+            return new Ball(_x, _y, _xDirection, _yDirection, _radius, _mass);
         }
 
         //Getter na kule o danym indeksie
@@ -65,7 +67,7 @@ namespace Logic {
         public void start() {
                 //Petla tworzaca "ruchome" obiekty kul i dodajace do EventHandlera informacje
             for (int i = _previousAmountOfCreatedBalls; i < _repository.size(); i++) {
-                BallMovementHandler movement = new BallMovementHandler(_repository.get(i), _nextBallIndex++);
+                BallMovementHandler movement = new BallMovementHandler(_repository.get(i), _nextBallIndex++, _repository);
                 movement._ballMovementDetection += (_, args) => {
                     onPositionChange(movement);
                 };

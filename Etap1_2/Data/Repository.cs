@@ -4,9 +4,11 @@ using System.Collections.Generic;
 namespace Data {
     public class Repository : DataAPI {                                     //Repozytorium przechowujace instancje kul oraz zarzadzajace nimi
         private List<Ball> _balls;                                           //Lista przechowujaca kule
+        public Ball _lockedBall;
 
         public Repository() {                                               //Konstruktor bezparametrowy, tworzy pusta liste
             _balls = new List<Ball>();
+            _lockedBall = new Ball();
         }
 
         public Repository(List<Ball> balls) {

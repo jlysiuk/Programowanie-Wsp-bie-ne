@@ -4,12 +4,16 @@
         private int _y;                                                 //Pozycja kuli w osi y na planszy (wartosc pomiedzy 41 a 409)
         private int _xDirection;                                        //Kierunek, w ktorym porusza sie kula w osi x (wartosc pomiedzy -1 a 1)
         private int _yDirection;                                        //Kierunek, w ktorym porusza sie kula w osi y (wartosc pomiedzy -1 a 1)
+        private int _radius;
+        private int _mass;
 
-        public Ball (int x, int y, int xDirection, int yDirection) {    //Konstruktor parametrowy, tworzy kule w podanym miejsu poruszajaca sie w podanym kierunku
+        public Ball (int x, int y, int xDirection, int yDirection, int radius, int mass) {    //Konsturktor parametrowy, tworzy kule w podanym miejsu poruszajaca sie w podanym kierunku
             _x = x;
             _y = y;
             _xDirection = xDirection;
             _yDirection = yDirection;
+            _radius = radius;
+            _mass = mass;
         }
 
         public Ball() {
@@ -42,6 +46,11 @@
 
         public void changeYDirection(int newYDirection) {               //Metoda potrzebna do zmiany ruchu w osi y, jezeli kula natrafi na sciane
             _yDirection = newYDirection;
+        }
+
+        public void setPos(int x, int y) {
+            _x = x;
+            _y = y;
         }
 
     }
