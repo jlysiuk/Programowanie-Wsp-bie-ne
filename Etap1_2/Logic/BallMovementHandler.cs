@@ -35,38 +35,41 @@ namespace Logic {
             try {
                 while (true) {
                     //Wykrycie kolizji miedzy dwiema kulami
-                    lock (_repository._lockedBall) {
+                    lock (_repository) {
                         for (int i = 0; i < _repository.size(); i++) {
                             Ball ball = _repository.get(i);
                             if (didBallsCollide(_ball, ball)) {
-                                int tempX = _ball.xDirection();
-                                int tempY = _ball.yDirection();
-                                _ball.changeXDirection(ball.xDirection());
-                                _ball.changeYDirection(ball.yDirection());
-                                ball.changeXDirection(tempX);
-                                ball.changeYDirection(tempY);
+                                int oneXSpeed = (_ball.xDirection() * (_ball.mass() - ball.mass()) + (2 * ball.mass() * ball.xDirection())) / (_ball.mass() + ball.mass());
+                                int oneYSpeed = (_ball.yDirection() * (_ball.mass() - ball.mass()) + (2 * ball.mass() * ball.yDirection())) / (_ball.mass() + ball.mass());
+                                int twoXSpeed = (ball.xDirection() * (ball.mass() - _ball.mass()) + (2 * _ball.mass() * _ball.xDirection())) / (_ball.mass() + ball.mass());
+                                int twoYSpeed = (ball.yDirection() * (ball.mass() - _ball.mass()) + (2 * _ball.mass() * _ball.yDirection())) / (_ball.mass() + ball.mass());
+                                _ball.changeXDirection(oneXSpeed);
+                                _ball.changeYDirection(oneYSpeed);
+                                ball.changeXDirection(twoXSpeed);
+                                ball.changeYDirection(twoYSpeed);
                             }
                         }
-                    }
-                    //Zamiana kierunku ruchu kul, jezeli trafia w sciane
-                    if (_ball.x() >= Surface.LEFT_CORNER_X + Surface.WIDTH - 30 || _ball.x() <= Surface.LEFT_CORNER_X) {
-                        if (_ball.xDirection() > 0) {
-                            _ball.changeXDirection(_ball.xDirection() * -1);
+                        //Zamiana kierunku ruchu kul, jezeli trafia w sciane
+                        if (_ball.x() >= Surface.LEFT_CORNER_X + Surface.WIDTH - 30 || _ball.x() <= Surface.LEFT_CORNER_X) {
+                            if (_ball.xDirection() > 0) {
+                                _ball.changeXDirection(_ball.xDirection() * -1);
+                            }
+                            else if (_ball.xDirection() < 0) {
+                                _ball.changeXDirection(Math.Abs(_ball.xDirection()));
+                            }
                         }
-                        else if (_ball.xDirection() < 0) {
-                            _ball.changeXDirection(Math.Abs(_ball.xDirection()));
-                        }
-                    }
-                    if (_ball.y() >= Surface.LEFT_CORNER_Y + Surface.HEIGHT - 50 || _ball.y() <= Surface.LEFT_CORNER_Y - 20) {
-                        if (_ball.yDirection() > 0) {
-                            _ball.changeYDirection(_ball.yDirection() * -1);
-                        }
-                        else if (_ball.yDirection() < 0) {
-                            _ball.changeYDirection(Math.Abs(_ball.yDirection()));
+                        if (_ball.y() >= Surface.LEFT_CORNER_Y + Surface.HEIGHT - 50 || _ball.y() <= Surface.LEFT_CORNER_Y - 20) {
+                            if (_ball.yDirection() > 0) {
+                                _ball.changeYDirection(_ball.yDirection() * -1);
+                            }
+                            else if (_ball.yDirection() < 0) {
+                                _ball.changeYDirection(Math.Abs(_ball.yDirection()));
+                            }
                         }
                     }
                     //Zmiana pozycji kuli
                     _ball.move();
+
                     onPositionChange(this);
                     //Opoznienie pomiedzy kazda zamiana pozycji, bez niego ruch bedzie odbywal sie tak szybko
                     //jak procesor bedzie w stanie go obliczyc
@@ -82,8 +85,8 @@ namespace Logic {
 
         //Metoda obliczajaca dystans pomiedzy dwiema kulami i sprawdzajaca, czy sie zderzyly
         private bool didBallsCollide(Ball one, Ball two) {
-            Vector2 onePos = new Vector2(one.x(), one.y());
-            Vector2 twoPos = new Vector2(two.x(), two.y());
+            Vector2 onePos = new Vector2(one.x() + one.xDirection(), one.y() + one.yDirection());
+            Vector2 twoPos = new Vector2(two.x() + two.xDirection(), two.y() + two.yDirection());
             if (Vector2.Distance(onePos, twoPos) < 30) {
                 return true;
             }

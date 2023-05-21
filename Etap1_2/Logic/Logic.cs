@@ -19,16 +19,31 @@ namespace Logic {
 
         //Metoda tworzaca podana ilosc instancji kul
         public void createBalls(int amount) {
-            for (int i = 0; i < amount; i++) {
-                _repository.add(createBall());
+            lock (_repository) {
+                int _buffer = _repository.size();
+                while (_repository.size() < _buffer + amount) {
+                    bool flag = true;
+                    Ball ball = createBall();
+                    for (int i = 0; i < _repository.size(); i++) {
+                        if (ball.x() < _repository.get(i).x() + 30 && ball.x() > _repository.get(i).x() - 30) {
+                            flag = false;
+                        }
+                        if (ball.y() < _repository.get(i).y() + 30 && ball.y() > _repository.get(i).y() - 30) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        _repository.add(ball);
+                    }
+                }
             }
         }
 
         //Metoda tworzaca kule
         private Ball createBall() {
             Random randomizer = new Random(Guid.NewGuid().GetHashCode());
-            int _x = randomizer.Next(Surface.LEFT_CORNER_X + 100, Surface.LEFT_CORNER_X + Surface.WIDTH - 100);
-            int _y = randomizer.Next(Surface.LEFT_CORNER_Y + 100, Surface.LEFT_CORNER_Y + Surface.HEIGHT - 100);
+            int _x = randomizer.Next(Surface.LEFT_CORNER_X, Surface.LEFT_CORNER_X + Surface.WIDTH - 30);
+            int _y = randomizer.Next(Surface.LEFT_CORNER_Y - 20, Surface.LEFT_CORNER_Y + Surface.HEIGHT - 50);
             int _xDirection = randomizer.Next(-5, 6);
             int _yDirection = randomizer.Next(-5, 6);
             while (_xDirection == 0 && _yDirection == 0) {
@@ -36,8 +51,8 @@ namespace Logic {
                 _yDirection = randomizer.Next(-5, 6);
             }
             int _mass = randomizer.Next(1, 6);
-            int _radius = (1 / _mass) * 10;
-            return new Ball(_x, _y, _xDirection, _yDirection, _radius, _mass);
+            int _radius = _mass * 10;
+            return new Ball(_x, _y, _xDirection, _yDirection, _mass);
         }
 
         //Getter na kule o danym indeksie

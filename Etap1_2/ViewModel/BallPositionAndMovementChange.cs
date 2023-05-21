@@ -7,7 +7,6 @@ namespace ViewModel {
         public event PropertyChangedEventHandler PropertyChanged;
         private int _x;
         private int _y;
-        private int _radius = 30;
 
         //Metoda przekazujaca informacje do EventHandlera o zmianie pozycji kuli
         private void onPropertyChanged([CallerMemberName] string propertyName = null) {
@@ -33,12 +32,6 @@ namespace ViewModel {
             } set {
                 _y = value;
                 onPropertyChanged();
-            }
-        }
-
-        public int r {
-            get {
-                return _radius;
             }
         }
 
