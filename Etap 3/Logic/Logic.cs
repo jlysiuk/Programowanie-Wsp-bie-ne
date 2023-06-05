@@ -19,6 +19,7 @@ namespace Logic {
             _repository = new Repository();
         }
 
+        //Timer
         private static void setTimer() {
             timer = new System.Timers.Timer(500);
             timer.Elapsed += onTimedEvent;
@@ -106,6 +107,7 @@ namespace Logic {
             }
             //Pole okreslajace identyfikator kazdej z kul
             _previousAmountOfCreatedBalls = _repository.size();
+            //Włączenie timera
             setTimer();
         }
 
@@ -117,6 +119,7 @@ namespace Logic {
             _threads.Clear();
             _nextBallIndex = 0;
             _previousAmountOfCreatedBalls = 0;
+            //Wyłączenie timera
             timer.Stop();
         }
 

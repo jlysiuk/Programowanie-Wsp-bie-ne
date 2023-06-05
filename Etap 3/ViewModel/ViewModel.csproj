@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{60176648-58A5-4D18-AC7E-EC050CE32409}</ProjectGuid>
+    <ProjectGuid>{F4CCF7B8-F062-4D8A-8B58-7AFC2E278BBD}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Logic</RootNamespace>
-    <AssemblyName>Logic</AssemblyName>
+    <RootNamespace>ViewModel</RootNamespace>
+    <AssemblyName>ViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -39,19 +39,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BallMovementHandler.cs" />
-    <Compile Include="Logic.cs" />
-    <Compile Include="LogicAPI.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{394eaa77-6727-4e6c-a56c-39a9c3004a62}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
+    <Compile Include="BallPositionAndMovementChange.cs" />
+    <Compile Include="ObservableBallCollection.cs" />
+    <Compile Include="Relay.cs" />
+    <Compile Include="ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{5dffec37-90a6-49d5-a00b-055f4228e055}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
